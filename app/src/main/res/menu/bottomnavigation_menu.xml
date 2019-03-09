@@ -4,17 +4,17 @@
 
     <item
         android:id="@+id/home_menu"
-        android:title="Eksplor"
-        android:icon="@drawable/ic_home"/>
+        android:title="@string/eksplor"
+        android:icon="@drawable/ic_explore_24dp"/>
 
     <item
         android:id="@+id/search_menu"
-        android:title="Donor Makan"
-        android:icon="@drawable/ic_search"/>
+        android:title="@string/donor_makan"
+        android:icon="@drawable/ic_donasi_24dp"/>
 
     <item
         android:id="@+id/favorite_menu"
-        android:title="Ambil"
-        android:icon="@drawable/ic_favorite"/>
+        android:title="@string/ambil"
+        android:icon="@drawable/ic_ambil_24dp"/>
 
 </menu>
