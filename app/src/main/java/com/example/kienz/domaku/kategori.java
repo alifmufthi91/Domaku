@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class kategori {
     String title;
-    private ArrayList<donasi> eventList;
+    ArrayList<donasi> eventList;
 
     public kategori(String title, ArrayList<donasi> eventList) {
         this.title = title;

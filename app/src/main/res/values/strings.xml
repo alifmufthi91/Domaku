@@ -10,4 +10,10 @@
     <string name="subtitle_explore">Cari makanan yang dapat kamu ambil disekitarmu!</string>
     <string name="title_explore">Eksplorasi Makanan Disekitarmu</string>
     <string name="item_name">the quick brown fox jump over the lazy dog</string>
+    <string name="donasikan_makanan">Donasikan Makanan</string>
+    <string name="Donasi_quote">Mari kita buang kebiasaan buruk kita dengan membuang buang sisa makanan dengan cara membagikan kepada yang membutuhkannya!</string>
+    <string name="ambil_subtitle">Anda belum mengambil apapun</string>
+    <string name="Ambil_title">Pengambilan</string>
+    <string name="buat">BUAT</string>
+    <string name="pengambilan">Pengambilan</string>
 </resources>

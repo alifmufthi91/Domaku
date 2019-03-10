@@ -1,4 +1,4 @@
-package com.example.kienz.domaku;
+package com.example.kienz.domaku.explore;
 
 import android.content.Context;
 import android.net.Uri;
@@ -6,13 +6,19 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kienz.domaku.R;
+import com.example.kienz.domaku.donasi;
+import com.example.kienz.domaku.kategori;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 /**
@@ -71,6 +77,16 @@ public class explore_frag extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
+
+    }
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_explore, container, false);
+        ButterKnife.bind(this,v);
         mKategori = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recy.setLayoutManager(layoutManager);
@@ -78,23 +94,31 @@ public class explore_frag extends Fragment {
         listTerbaru = new ArrayList<>();
         donasi a = new donasi("Sisa wedding ada 40 porsi",40,"http://cdn2.tstatic.net/jabar/foto/bank/images/rijsttafel_20180919_094737.jpg");
         donasi b = new donasi("Abis Syukuran masih ada rendang, sate,  buat 20",20,"https://sejasa-production.s3.amazonaws.com/uploads/attachment/file/554953/Screenshot_2016-06-05-16-04-47_com.facebook.katana.png");
+        listTerdekat.add(a);
+        listTerdekat.add(b);
+        listTerdekat.add(a);
+        listTerdekat.add(b);
+        listTerdekat.add(a);
+        listTerdekat.add(b);
+        listTerbaru.add(b);
+        listTerbaru.add(a);
+        listTerbaru.add(b);
+        listTerbaru.add(a);
+        listTerbaru.add(b);
+        listTerbaru.add(a);
         kategori eventTerdekat = new kategori("Terdekat",listTerdekat);
-        kategori eventTerbaru = new kategori("Terdekat",listTerbaru);
-        eventTerdekat.add(a);
-        eventTerbaru.add(b);
+        kategori eventTerbaru = new kategori("Terbaru",listTerbaru);
         mKategori.add(eventTerdekat);
         mKategori.add(eventTerbaru);
 
         adapter = new explore_kategori_adapter(getActivity(),mKategori);
+        for (kategori h : mKategori) {
+            Log.d("namonn",h.getTitle());
+            Log.d("namonno", String.valueOf(adapter.getItemCount()));
+        }
         recy.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_explore, container, false);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

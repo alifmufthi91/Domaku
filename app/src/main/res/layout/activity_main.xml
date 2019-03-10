@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,24 +8,37 @@
 
     <!--Content Main-->
 
-    <FrameLayout
-        android:id="@+id/fl_container"
+
+    <com.example.kienz.domaku.NonSwipeableViewPager
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
-        <include layout="@layout/fragment_explore" />
-    </FrameLayout>
+        android:layout_above="@id/tablayout"
+        android:id="@+id/pager">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bn_main"
+
+    </com.example.kienz.domaku.NonSwipeableViewPager>
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom"
-        android:background="@color/appBg"
-        app:itemIconTint="@drawable/state_bnve"
-        app:itemTextColor="@drawable/state_bnve"
-        app:menu="@menu/bottomnavigation_menu" />
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.Light"
+        app:tabIndicatorColor="@color/colorPrimary">
+
+    </android.support.design.widget.TabLayout>
+
+<!--<android.support.design.widget.BottomNavigationView-->
+        <!--android:id="@+id/bn_main"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--android:background="@color/appBg"-->
+        <!--app:itemIconTint="@drawable/state_bnve"-->
+        <!--app:itemTextColor="@drawable/state_bnve"-->
+        <!--app:menu="@menu/bottomnavigation_menu" />-->
 
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

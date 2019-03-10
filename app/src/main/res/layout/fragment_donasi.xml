@@ -1,14 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".donasi_frag">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/quote_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/blurredphoto"
+                    android:scaleType="centerCrop"/>
+                <TextView
+                    android:id="@+id/quote_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="30dp"
+                    android:text="@string/Donasi_quote"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    app:fontFamily="@font/poppinslight"
+                    android:shadowColor="@color/black"
+                    android:shadowRadius="1.5"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:layout_alignBottom="@id/quote_img"
+                    android:layout_alignTop="@id/quote_img"/>
+            </RelativeLayout>
 
-</FrameLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/dim_gray"
+                    android:inputType="text"
+                    android:hint="Judul"
+                    android:layout_margin="8dp"
+                    android:maxLines="1"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/poppinsmedium"/>
+
+            </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/dim_gray"
+                    android:inputType="numberDecimal"
+                    android:hint="Jumlah"
+                    android:layout_margin="8dp"
+                    android:maxLines="1"
+                    android:imeOptions="actionNext"
+                    android:singleLine="true"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/poppinsmedium"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/dim_gray"
+                    android:inputType="text"
+                    android:hint="Lokasi"
+                    android:layout_margin="8dp"
+                    android:maxLines="3"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:fontFamily="@font/poppinsmedium"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/buat"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:layout_marginBottom="30dp"
+                android:fontFamily="@font/poppinsregular"
+                android:background="@drawable/shape_rect_corner"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+
+</android.support.constraint.ConstraintLayout>
