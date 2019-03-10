@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ambil.OnFragmentInteractionListener} interface
+ * {@link ambil_frag.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ambil#newInstance} factory method to
+ * Use the {@link ambil_frag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ambil extends Fragment {
+public class ambil_frag extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +29,7 @@ public class ambil extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ambil() {
+    public ambil_frag() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class ambil extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ambil.
+     * @return A new instance of fragment ambil_frag.
      */
     // TODO: Rename and change types and number of parameters
-    public static ambil newInstance(String param1, String param2) {
-        ambil fragment = new ambil();
+    public static ambil_frag newInstance(String param1, String param2) {
+        ambil_frag fragment = new ambil_frag();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

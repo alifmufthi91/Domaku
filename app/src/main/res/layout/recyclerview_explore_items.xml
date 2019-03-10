@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <android.support.design.card.MaterialCardView
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="8dp">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageView_explore_item_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/celebration"
+                android:scaleType="centerCrop"/>
+
+            <TextView
+                android:id="@+id/textView_explore_item_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_alignBottom="@id/imageView_explore_item_image"
+                android:text="@string/item_name"
+                android:textColor="@color/white"
+                app:fontFamily="@font/robotobold"
+
+                android:textSize="12sp"/>
+        </RelativeLayout>
+
+    </android.support.design.card.MaterialCardView>
+</RelativeLayout>
+

@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         setContentView(R.layout.activity_main);
 
         // kita set default nya Home Fragment
-        loadFragment(new explore());
+        loadFragment(new explore_frag());
         // inisialisasi BottomNavigaionView
         BottomNavigationView bottomNavigationView = findViewById(R.id.bn_main);
         // beri listener pada saat item/menu bottomnavigation terpilih
@@ -38,13 +38,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Fragment fragment = null;
         switch (menuItem.getItemId()){
             case R.id.home_menu:
-                fragment = new explore();
+                fragment = new explore_frag();
                 break;
             case R.id.search_menu:
-                fragment = new donasi();
+                fragment = new donasi_frag();
                 break;
             case R.id.favorite_menu:
-                fragment = new ambil();
+                fragment = new ambil_frag();
                 break;
         }
         return loadFragment(fragment);

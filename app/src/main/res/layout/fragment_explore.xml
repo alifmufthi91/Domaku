@@ -31,21 +31,23 @@
                         android:id="@+id/myImageView"
                         android:layout_width="match_parent"
                         android:layout_height="250dp"
-                        android:src="@mipmap/home_explore"
+                        android:src="@drawable/celebration"
                         android:scaleType="centerCrop"/>
 
                     <TextView
-                        android:id="@+id/myImageViewText"
+                        android:id="@+id/exploreTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@id/myImageView2"
-                        android:layout_above="@id/myImageView2"
+                        android:layout_alignLeft="@id/exploreSubtitle"
+                        android:layout_above="@id/exploreSubtitle"
                         android:gravity="center"
-                        android:text="Eksplorasi Makanan Disekitarmu"
+                        android:text="@string/title_explore"
                         android:textStyle="bold"
-                        android:textColor="#ffffff" />
+                        android:textColor="@color/white"
+                        app:fontFamily="@font/poppinsregular"
+                        android:layout_alignStart="@id/exploreSubtitle" />
                     <TextView
-                        android:id="@+id/myImageView2"
+                        android:id="@+id/exploreSubtitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignLeft="@id/myImageView"
@@ -53,10 +55,22 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="10dp"
                         android:gravity="center"
-                        android:text="Eksplorasi Makanan Disekitarmu"
-                        android:textColor="#ffffff" />
+                        android:text="@string/subtitle_explore"
+                        android:textColor="@color/white"
+                        app:fontFamily="@font/poppinsregular"
+                        android:textSize="12sp"
+                        android:layout_alignStart="@id/myImageView"
+                        android:layout_marginStart="10dp" />
 
                 </RelativeLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView_explore_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="8dp">
+
+                </android.support.v7.widget.RecyclerView>
 
 
             </LinearLayout>
