@@ -16,4 +16,13 @@
     <string name="Ambil_title">Pengambilan</string>
     <string name="buat">BUAT</string>
     <string name="pengambilan">Pengambilan</string>
+    <string name="title_activity_donasi_detail">donasi_detail</string>
+    <string name="explore_detail_title">The Quick Brown Fox Jumps Over The Lazy Dog</string>
+    <string name="explore_detail_sisa">Tersisa :</string>
+    <string name="explore_detail_sisacount">0</string>
+    <string name="jumlah_porsi">0 Porsi</string>
+    <string name="batas_waktu">Segera Mungkin</string>
+    <string name="alamat_donasi">Jl. Anggrek no 11, Cipamokolan, Bandung, Jawa Barat.</string>
+    <string name="pengambilan_subtitle">Anda belum mengambil apapun</string>
+    <string name="ambil_item_title">The Quick Brown Fox Jumps Over The Lazy Dog</string>
 </resources>

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.kienz.domaku.R;
 import com.example.kienz.domaku.donasi;
+import com.example.kienz.domaku.explore_detail;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,10 +36,10 @@ public class explore_item_viewholder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 int itemPosition = getLayoutPosition();
-//                Intent intent = new Intent(mContext, RecipeDetail.class);
+                Intent intent = new Intent(mContext, explore_detail.class);
 //                intent.putExtra("idResep",mRecipes.get(itemPosition).getRecipeId());
 //                intent.putExtra("namaResep", mRecipes.get(itemPosition).getName());
-//                mContext.startActivity(intent);
+                mContext.startActivity(intent);
             }
         });
     }
