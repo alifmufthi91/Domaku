@@ -25,4 +25,6 @@
     <string name="alamat_donasi">Jl. Anggrek no 11, Cipamokolan, Bandung, Jawa Barat.</string>
     <string name="pengambilan_subtitle">Anda belum mengambil apapun</string>
     <string name="ambil_item_title">The Quick Brown Fox Jumps Over The Lazy Dog</string>
+    <string name="frag_ambil">PENGAMBILAN</string>
+    <string name="frag_donasi">DONASI</string>
 </resources>
