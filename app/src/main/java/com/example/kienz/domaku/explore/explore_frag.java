@@ -92,8 +92,8 @@ public class explore_frag extends Fragment {
         recy.setLayoutManager(layoutManager);
         listTerdekat = new ArrayList<>();
         listTerbaru = new ArrayList<>();
-        donasi a = new donasi("Sisa wedding ada 40 porsi",40,"http://cdn2.tstatic.net/jabar/foto/bank/images/rijsttafel_20180919_094737.jpg");
-        donasi b = new donasi("Abis Syukuran masih ada rendang, sate,  buat 20",20,"https://sejasa-production.s3.amazonaws.com/uploads/attachment/file/554953/Screenshot_2016-06-05-16-04-47_com.facebook.katana.png");
+        donasi a = new donasi("Sisa wedding ada 40 porsi",40,"http://cdn2.tstatic.net/jabar/foto/bank/images/rijsttafel_20180919_094737.jpg",null,null);
+        donasi b = new donasi("Abis Syukuran masih ada rendang, sate,  buat 20",20,"https://sejasa-production.s3.amazonaws.com/uploads/attachment/file/554953/Screenshot_2016-06-05-16-04-47_com.facebook.katana.png",null,null);
         listTerdekat.add(a);
         listTerdekat.add(b);
         listTerdekat.add(a);

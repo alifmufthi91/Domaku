@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,14 +18,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,13 +58,32 @@ public class donasi_frag extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     @BindView(R.id.donasi_upload_img)
     Button uploadBtn;
+    @BindView(R.id.donasi_buat)
+    Button buatBtn;
+    @BindView(R.id.donasi_judul)
+    EditText judulEditText;
+    @BindView(R.id.donasi_jumlah)
+    EditText jumlahEditText;
+    @BindView(R.id.donasi_alamat)
+    EditText alamatEditText;
+    Bitmap bitmap;
+    byte[] ImageReady;
+    String urlImage;
+
+    private StorageReference storageRef;
     private Uri filePath;
+
 
     private final int PICK_IMAGE_REQUEST = 71;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDonasiDatabaseReference;
+    private FirebaseStorage storage;
+    private FirebaseAuth mAuth;
+
 
     private OnFragmentInteractionListener mListener;
 
@@ -86,6 +116,11 @@ public class donasi_frag extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDonasiDatabaseReference = mFirebaseDatabase.getReference().child("Donasi");
+        mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
     }
 
     @Override
@@ -97,28 +132,52 @@ public class donasi_frag extends Fragment {
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
-        ValueEventListener postListener = new ValueEventListener() {
+        jumlahEditText.setText("0");
+        buatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                User post = dataSnapshot.getValue(User.class);
+            public void onClick(View view) {
+                if(Integer.parseInt(jumlahEditText.getText().toString())<1){
+                    jumlahEditText.setError("Jumlah tidak boleh kosong");
+                }else{
+                    String userId = mAuth.getCurrentUser().getUid();
+                    final StorageReference imageDonasi = storageRef.child("images/"+userId+"/"+judulEditText.getText().toString()+".jpg");
+                    UploadTask uploadTask = imageDonasi.putBytes(ImageReady);
 
-                // ...
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Handle unsuccessful uploads
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                            imageDonasi.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    try {
+                                        urlImage = new URL(uri.toString()).toString();
+                                    } catch (MalformedURLException e) {
+                                        e.printStackTrace();
+                                    }
+                                    donasi donasiBaru = new donasi(judulEditText.getText().toString(),Integer.parseInt(jumlahEditText.getText().toString()),urlImage,alamatEditText.getText().toString(),mAuth.getCurrentUser().getUid());
+                                    mDonasiDatabaseReference.push().setValue(donasiBaru);
+                                }
+                            });
+                        }
+                    });
+
+                }
+
             }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
-                // ...
-            }
-        };
-
+        });
         return v;
     }
 
@@ -155,8 +214,11 @@ public class donasi_frag extends Fragment {
         {
             filePath = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
                 Drawable d = new BitmapDrawable(getResources(), bitmap);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                ImageReady = baos.toByteArray();
                 uploadBtn.setBackground(d);
             }
             catch (IOException e)
@@ -165,6 +227,7 @@ public class donasi_frag extends Fragment {
             }
         }
     }
+
 
     /**
      * This interface must be implemented by activities that contain this

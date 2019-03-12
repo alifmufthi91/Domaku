@@ -86,8 +86,8 @@ public class ambil_frag extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recy.setLayoutManager(layoutManager);
         listAmbil = new ArrayList<>();
-        donasi a = new donasi("Sisa wedding ada 40 porsi",40,"http://cdn2.tstatic.net/jabar/foto/bank/images/rijsttafel_20180919_094737.jpg");
-        donasi b = new donasi("Abis Syukuran masih ada rendang, sate,  buat 20",20,"https://sejasa-production.s3.amazonaws.com/uploads/attachment/file/554953/Screenshot_2016-06-05-16-04-47_com.facebook.katana.png");
+        donasi a = new donasi("Sisa wedding ada 40 porsi",40,"http://cdn2.tstatic.net/jabar/foto/bank/images/rijsttafel_20180919_094737.jpg",null,null);
+        donasi b = new donasi("Abis Syukuran masih ada rendang, sate,  buat 20",20,"https://sejasa-production.s3.amazonaws.com/uploads/attachment/file/554953/Screenshot_2016-06-05-16-04-47_com.facebook.katana.png",null,null);
         listAmbil.add(a);
         listAmbil.add(b);
         adapter = new ambil_item_adapter(getActivity(),listAmbil);

@@ -17,14 +17,17 @@ import com.example.kienz.domaku.explore.explore_frag;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, explore_frag.OnFragmentInteractionListener, ambil_frag.OnFragmentInteractionListener, donasi_frag.OnFragmentInteractionListener   {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, explore_frag.OnFragmentInteractionListener, ambil_frag.OnFragmentInteractionListener, donasi_frag.OnFragmentInteractionListener, profile_frag.OnFragmentInteractionListener  {
 
     TabLayout tabLayout;
-    private DatabaseReference mDatabase;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDonasiDatabaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
         createTabIcons();
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDonasiDatabaseReference = mFirebaseDatabase.getReference().child("Donasi");
 
         // inisialisasi BottomNavigaionView
 //        BottomNavigationView bottomNavigationView = findViewById(R.id.bn_main);
@@ -70,12 +75,22 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         tabThree.setText(tabLayout.getTabAt(2).getText());
         tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_ambil_24dp, 0, 0);
         tabLayout.getTabAt(2).setCustomView(tabThree);
+        TextView tabFour = (TextView) LayoutInflater.from(this).inflate(R.layout.custom_tab, null);
+        tabFour.setText(tabLayout.getTabAt(3).getText());
+        tabFour.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_person_black_24dp, 0, 0);
+        tabLayout.getTabAt(3).setCustomView(tabFour);
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         int id = menuItem.getItemId();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 
     @Override
