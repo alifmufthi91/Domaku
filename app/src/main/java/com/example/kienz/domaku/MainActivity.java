@@ -8,17 +8,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.kienz.domaku.explore.explore_frag;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.BindView;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, explore_frag.OnFragmentInteractionListener, ambil_frag.OnFragmentInteractionListener, donasi_frag.OnFragmentInteractionListener   {
 
     TabLayout tabLayout;
+    private DatabaseReference mDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
         createTabIcons();
+
         // inisialisasi BottomNavigaionView
 //        BottomNavigationView bottomNavigationView = findViewById(R.id.bn_main);
 //        // beri listener pada saat item/menu bottomnavigation terpilih
