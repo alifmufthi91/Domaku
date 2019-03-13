@@ -91,10 +91,7 @@ public class ambil_frag extends Fragment {
         listAmbil.add(a);
         listAmbil.add(b);
         adapter = new ambil_item_adapter(getActivity(),listAmbil);
-        for (donasi h : listAmbil) {
-            Log.d("namonn",h.getEventname());
-            Log.d("namonno", String.valueOf(adapter.getItemCount()));
-        }
+
         recy.setAdapter(adapter);
         updateRecycler();
         return v;

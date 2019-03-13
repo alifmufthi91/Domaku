@@ -12,16 +12,23 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +43,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.UUID;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -140,20 +148,41 @@ public class donasi_frag extends Fragment {
             }
         });
         jumlahEditText.setText("0");
+        jumlahEditText.addTextChangedListener(new TextWatcher(){
+            public void onTextChanged(CharSequence s, int start, int before, int count)
+            {
+                if (jumlahEditText.getText().toString().matches("^0") )
+                {
+                    // Not allowed
+                    Toast.makeText(getContext(), "not allowed", Toast.LENGTH_LONG).show();
+                    jumlahEditText.setText("");
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable arg0) { }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        });
         buatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(Integer.parseInt(jumlahEditText.getText().toString())<1){
-                    jumlahEditText.setError("Jumlah tidak boleh kosong");
-                }else{
-                    String userId = mAuth.getCurrentUser().getUid();
-                    final StorageReference imageDonasi = storageRef.child("images/"+userId+"/"+judulEditText.getText().toString()+".jpg");
-                    UploadTask uploadTask = imageDonasi.putBytes(ImageReady);
 
+                if(Integer.parseInt(jumlahEditText.getText().toString())<1||jumlahEditText.getText().toString().equals("")){
+                    jumlahEditText.setError("Jumlah tidak boleh kosong");
+
+                }else if(judulEditText.getText().equals("")) {
+                    judulEditText.setError("Judul tidak boleh kosong");
+                }else
+                {
+                    String userId = mAuth.getCurrentUser().getUid();
+                    final StorageReference imageDonasi = storageRef.child("images/"+userId+"/"+UUID.randomUUID()+".jpg");
+                    UploadTask uploadTask = imageDonasi.putBytes(ImageReady);
                     uploadTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
+
                             // Handle unsuccessful uploads
+                            Snackbar.make(getActivity().findViewById(R.id.frag_donasi), "Donasi gagal dibuat", Snackbar.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -168,7 +197,16 @@ public class donasi_frag extends Fragment {
                                         e.printStackTrace();
                                     }
                                     donasi donasiBaru = new donasi(judulEditText.getText().toString(),Integer.parseInt(jumlahEditText.getText().toString()),urlImage,alamatEditText.getText().toString(),mAuth.getCurrentUser().getUid());
-                                    mDonasiDatabaseReference.push().setValue(donasiBaru);
+                                    mDonasiDatabaseReference.push().setValue(donasiBaru).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                Snackbar.make(getActivity().findViewById(R.id.frag_donasi), "Donasi telah dibuat", Snackbar.LENGTH_SHORT).show();
+                                            }else{
+                                                Snackbar.make(getActivity().findViewById(R.id.frag_donasi), "Donasi gagal dibuat", Snackbar.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
                                 }
                             });
                         }
@@ -242,5 +280,19 @@ public class donasi_frag extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    public void showProgressDialog() {
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+    }
+
+    public void hideProgressDialog() {
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        hideProgressDialog();
     }
 }

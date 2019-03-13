@@ -45,8 +45,8 @@ public class ambil_item_viewholder extends RecyclerView.ViewHolder {
     }
 
     public void bindEvent(donasi event) {
-        Log.d("namonna",event.getEventname());
-        Picasso.get().load(event.getGambarUrl()).into(mAmbilImageView);
-        mAmbilNameTextView.setText(event.getEventname());
+        Log.d("namonna",event.getJudul());
+        Picasso.get().load(event.getGambar()).into(mAmbilImageView);
+        mAmbilNameTextView.setText(event.getJudul());
     }
 }

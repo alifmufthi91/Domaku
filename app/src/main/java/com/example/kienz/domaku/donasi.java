@@ -24,27 +24,52 @@ public class donasi {
         this.donatur = donatur;
     }
 
-    public String getEventname() {
+
+    public String getJudul() {
         return judul;
     }
 
-    public int getJumlah() {
+    public void setJudul(String judul) {
+        this.judul = judul;
+    }
+
+    public int getQty() {
         return qty;
     }
 
-    public String getGambarUrl() {
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
+
+    public String getGambar() {
         return gambar;
     }
 
-    public void setEventname(String eventname) {
-        this.judul = eventname;
+    public void setGambar(String gambar) {
+        this.gambar = gambar;
     }
 
-    public void setJumlah(int jumlah) {
-        this.qty = jumlah;
+    public String getDonatur() {
+        return donatur;
     }
 
-    public void setGambarUrl(String gambarUrl) {
-        this.gambar = gambarUrl;
+    public void setDonatur(String donatur) {
+        this.donatur = donatur;
+    }
+
+    public String getWaktuBuat() {
+        return waktuBuat;
+    }
+
+    public void setWaktuBuat(String waktuBuat) {
+        this.waktuBuat = waktuBuat;
+    }
+
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
     }
 }

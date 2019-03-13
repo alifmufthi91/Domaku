@@ -45,8 +45,7 @@ public class explore_item_viewholder extends RecyclerView.ViewHolder {
     }
 
     public void bindEvent(donasi event) {
-        Log.d("namonna",event.getEventname());
-        Picasso.get().load(event.getGambarUrl()).into(mEventImageView);
-        mEventNameTextView.setText(event.getEventname());
+        Picasso.get().load(event.getGambar()).into(mEventImageView);
+        mEventNameTextView.setText(event.getJudul());
     }
 }
