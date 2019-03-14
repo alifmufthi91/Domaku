@@ -50,8 +50,8 @@ public class explore_kategori_adapter extends RecyclerView.Adapter<explore_kateg
                 .mEventRecyclerView.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
 
-        SnapHelper snapHelperStart = new LinearSnapHelper();
-        snapHelperStart.attachToRecyclerView(holder.mEventRecyclerView);
+//        SnapHelper snapHelperStart = new LinearSnapHelper();
+//        snapHelperStart.attachToRecyclerView(holder.mEventRecyclerView);
         int size = 6; // Get the offset that you want
         holder.mEventRecyclerView.addItemDecoration(new PaddingItemDecoration(size));
 

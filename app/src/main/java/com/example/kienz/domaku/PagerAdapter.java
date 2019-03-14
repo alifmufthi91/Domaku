@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.example.kienz.domaku.ambil.ambil_frag;
 import com.example.kienz.domaku.explore.explore_frag;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {

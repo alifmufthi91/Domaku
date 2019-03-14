@@ -29,5 +29,15 @@ public class kategori {
 
     public void add(donasi event){
         this.eventList.add(event);
+        if(this.eventList.size() > 6)
+            this.eventList.remove(eventList.size() - 1);
     }
+
+    public void add(int pos, donasi event){
+        this.eventList.add(pos,event);
+        if(this.eventList.size() > 6)
+            this.eventList.remove(eventList.size() - 1);
+    }
+
+
 }

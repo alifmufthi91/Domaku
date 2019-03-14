@@ -1,4 +1,4 @@
-package com.example.kienz.domaku;
+package com.example.kienz.domaku.ambil;
 
 import android.content.Context;
 import android.net.Uri;
@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.example.kienz.domaku.explore.explore_kategori_adapter;
+import com.example.kienz.domaku.R;
+import com.example.kienz.domaku.donasi;
 
 import java.util.ArrayList;
 

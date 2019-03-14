@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -12,10 +16,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +30,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -65,15 +75,21 @@ public class donasi_frag extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     @BindView(R.id.donasi_upload_img)
-    Button uploadBtn;
+    ImageView uploadImage;
     @BindView(R.id.donasi_buat)
-    Button buatBtn;
+    Button buatButton;
     @BindView(R.id.donasi_judul)
     EditText judulEditText;
     @BindView(R.id.donasi_jumlah)
     EditText jumlahEditText;
     @BindView(R.id.donasi_alamat)
     EditText alamatEditText;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
+    @BindView(R.id.donasi_upload_btn)
+    Button uploadBtn;
+    @BindView(R.id.donasi_bingkai)
+    ConstraintLayout bingkaiImage;
     Bitmap bitmap;
     byte[] ImageReady;
     String urlImage;
@@ -137,6 +153,8 @@ public class donasi_frag extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_donasi, container, false);
         ButterKnife.bind(this,v);
+        jumlahEditText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        jumlahEditText.setTransformationMethod(new NumericKeyBoardTransformationMethod());
         uploadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,14 +165,13 @@ public class donasi_frag extends Fragment {
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
             }
         });
-        jumlahEditText.setText("0");
         jumlahEditText.addTextChangedListener(new TextWatcher(){
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
                 if (jumlahEditText.getText().toString().matches("^0") )
                 {
                     // Not allowed
-                    Toast.makeText(getContext(), "not allowed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Tidak Boleh kosong", Toast.LENGTH_LONG).show();
                     jumlahEditText.setText("");
                 }
             }
@@ -163,59 +180,79 @@ public class donasi_frag extends Fragment {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
         });
-        buatBtn.setOnClickListener(new View.OnClickListener() {
+        buatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if(Integer.parseInt(jumlahEditText.getText().toString())<1||jumlahEditText.getText().toString().equals("")){
+                getView().clearFocus();
+                showProgressDialog();
+                if(jumlahEditText.getText().toString().equals("")){
                     jumlahEditText.setError("Jumlah tidak boleh kosong");
-
-                }else if(judulEditText.getText().equals("")) {
+                    hideProgressDialog();
+                }else if(judulEditText.getText().toString().equals("")) {
                     judulEditText.setError("Judul tidak boleh kosong");
-                }else
-                {
-                    String userId = mAuth.getCurrentUser().getUid();
-                    final StorageReference imageDonasi = storageRef.child("images/"+userId+"/"+UUID.randomUUID()+".jpg");
-                    UploadTask uploadTask = imageDonasi.putBytes(ImageReady);
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception exception) {
-
-                            // Handle unsuccessful uploads
-                            Snackbar.make(getActivity().findViewById(R.id.frag_donasi), "Donasi gagal dibuat", Snackbar.LENGTH_SHORT).show();
-                        }
-                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                            imageDonasi.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    try {
-                                        urlImage = new URL(uri.toString()).toString();
-                                    } catch (MalformedURLException e) {
-                                        e.printStackTrace();
-                                    }
-                                    donasi donasiBaru = new donasi(judulEditText.getText().toString(),Integer.parseInt(jumlahEditText.getText().toString()),urlImage,alamatEditText.getText().toString(),mAuth.getCurrentUser().getUid());
-                                    mDonasiDatabaseReference.push().setValue(donasiBaru).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                Snackbar.make(getActivity().findViewById(R.id.frag_donasi), "Donasi telah dibuat", Snackbar.LENGTH_SHORT).show();
-                                            }else{
-                                                Snackbar.make(getActivity().findViewById(R.id.frag_donasi), "Donasi gagal dibuat", Snackbar.LENGTH_SHORT).show();
-                                            }
+                    hideProgressDialog();
+                }else if(alamatEditText.getText().toString().equals("")){
+                    alamatEditText.setError("Judul tidak boleh kosong");
+                    hideProgressDialog();
+                }else if(filePath==null) {
+                    Toast.makeText(getContext(),"Berikan foto untuk makanan",Toast.LENGTH_SHORT).show();
+                    hideProgressDialog();
+                }else{
+                    if(Integer.parseInt(jumlahEditText.getText().toString())<1){
+                        jumlahEditText.setError("Jumlah tidak boleh kurang dari 1");
+                    }else{
+                        String userId = mAuth.getCurrentUser().getUid();
+                        final StorageReference imageDonasi = storageRef.child("images/"+userId+"/"+UUID.randomUUID()+".jpg");
+                        final UploadTask uploadTask = imageDonasi.putBytes(ImageReady);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                uploadTask.cancel();
+                                hideProgressDialog();
+                                // Handle unsuccessful uploads
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                                imageDonasi.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        try {
+                                            urlImage = new URL(uri.toString()).toString();
+                                        } catch (MalformedURLException e) {
+                                            e.printStackTrace();
                                         }
-                                    });
-                                }
-                            });
-                        }
-                    });
+//                                    donasi donasiBaru = new donasi(judulEditText.getText().toString(),Integer.parseInt(jumlahEditText.getText().toString()),urlImage,alamatEditText.getText().toString(),mAuth.getCurrentUser().getUid());
+                                        donasi donasiBaru = new donasi();
+                                        donasiBaru.setJudul(judulEditText.getText().toString());
+                                        donasiBaru.setAlamat(alamatEditText.getText().toString());
+                                        donasiBaru.setQty(Integer.parseInt(jumlahEditText.getText().toString()));
+                                        donasiBaru.setGambar(urlImage);
+                                        donasiBaru.setDonatur(mAuth.getCurrentUser().getUid());
+                                        donasiBaru.setKoordinattempat(new koordinat(-6.6232204,107.17919));
+                                        donasiBaru.sisa=donasiBaru.qty;
+                                        mDonasiDatabaseReference.push().setValue(donasiBaru).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Toast.makeText(getContext(),"Donasi telah dibuat",Toast.LENGTH_SHORT).show();
+                                                hideProgressDialog();
+                                                Intent afterDonasi = new Intent(getActivity(),donasiBeres.class);
+                                                startActivity(afterDonasi);
+                                                clearField();
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        });
+                    }
 
                 }
 
             }
         });
+        progressBar.setIndeterminate(true);
         return v;
     }
 
@@ -243,6 +280,17 @@ public class donasi_frag extends Fragment {
         mListener = null;
     }
 
+    void clearField(){
+        judulEditText.clearFocus();
+        judulEditText.setText("");
+        jumlahEditText.clearFocus();
+        jumlahEditText.setText("");
+        alamatEditText.clearFocus();
+        alamatEditText.setText("");
+        uploadImage.setImageResource(R.drawable.defaultthumbs);
+        filePath = null;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -253,11 +301,13 @@ public class donasi_frag extends Fragment {
             filePath = data.getData();
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                Drawable d = new BitmapDrawable(getResources(), bitmap);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+//                bitmap = Bitmap.createScaledBitmap(bitmap,bingkaiImage.getWidth(),bingkaiImage.getMinHeight(),true);
+                bitmap = scaleRatio(bitmap,600,600);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                Drawable d = new BitmapDrawable(getResources(), bitmap);
                 ImageReady = baos.toByteArray();
-                uploadBtn.setBackground(d);
+                uploadImage.setImageDrawable(d);
             }
             catch (IOException e)
             {
@@ -282,17 +332,48 @@ public class donasi_frag extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
     public void showProgressDialog() {
-        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        progressBar.setVisibility(View.VISIBLE);
     }
 
     public void hideProgressDialog() {
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        progressBar.setVisibility(View.GONE);
 
     }
+
+    public Bitmap scaleRatio(Bitmap originalImage, float width, float height){
+        Bitmap background = Bitmap.createBitmap((int)width, (int)height, Bitmap.Config.ARGB_8888);
+        float originalWidth = originalImage.getWidth();
+        float originalHeight = originalImage.getHeight();
+
+        Canvas canvas = new Canvas(background);
+        float scale = width / originalWidth;
+
+        float xTranslation = 0.0f;
+        float yTranslation = (height - originalHeight * scale) / 2.0f;
+
+        Matrix transformation = new Matrix();
+        transformation.postTranslate(xTranslation, yTranslation);
+        transformation.preScale(scale, scale);
+
+        Paint paint = new Paint();
+        paint.setFilterBitmap(true);
+
+        canvas.drawBitmap(originalImage, transformation, paint);
+
+        return background;
+    }
+
+
     @Override
     public void onStop() {
         super.onStop();
         hideProgressDialog();
+    }
+
+    private class NumericKeyBoardTransformationMethod extends PasswordTransformationMethod {
+        @Override
+        public CharSequence getTransformation(CharSequence source, View view) {
+            return source;
+        }
     }
 }

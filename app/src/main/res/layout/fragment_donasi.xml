@@ -7,123 +7,162 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".donasi_frag">
-
-    <android.support.v4.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <LinearLayout
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/quote_img"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/quote_img"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/blurredphoto"
+                        android:scaleType="centerCrop"/>
+                    <TextView
+                        android:id="@+id/quote_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="30dp"
+                        android:text="@string/Donasi_quote"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        app:fontFamily="@font/poppinslight"
+                        android:shadowColor="@color/black"
+                        android:shadowRadius="1.5"
+                        android:shadowDx="1"
+                        android:shadowDy="1"
+                        android:layout_alignBottom="@id/quote_img"
+                        android:layout_alignTop="@id/quote_img"/>
+                </RelativeLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                    android:indeterminateOnly="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/blurredphoto"
-                    android:scaleType="centerCrop"/>
+                    android:visibility="gone"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/donasi_judul"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/dim_gray"
+                        android:inputType="text"
+                        android:hint="Judul"
+                        android:maxLength="36"
+                        android:layout_margin="8dp"
+                        android:maxLines="1"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:fontFamily="@font/poppinsmedium"/>
+
+                </android.support.design.widget.TextInputLayout>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/donasi_jumlah"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/dim_gray"
+                        android:inputType="numberDecimal"
+                        android:hint="Jumlah"
+                        android:layout_margin="8dp"
+                        android:maxLength="7"
+                        android:maxLines="1"
+                        android:imeOptions="actionNext"
+                        android:singleLine="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:fontFamily="@font/poppinsmedium"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/donasi_alamat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/dim_gray"
+                        android:inputType="textMultiLine"
+                        android:hint="Lokasi"
+                        android:layout_margin="8dp"
+                        android:maxLines="3"
+                        android:maxLength="200"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:backgroundTint="@color/colorPrimary"
+                        android:fontFamily="@font/poppinsmedium"/>
+
+                </android.support.design.widget.TextInputLayout>
                 <TextView
-                    android:id="@+id/quote_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tambahkan Foto"
+                    android:gravity="center"/>
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/donasi_bingkai"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_marginHorizontal="32dp"
+                    android:layout_marginVertical="8dp">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:id="@+id/donasi_upload_img"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/defaultthumbs"
+                            android:background="@color/colorPrimary"
+                            android:scaleType="centerCrop"/>
+                        <Button
+                            android:id="@+id/donasi_upload_btn"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
+                            android:layout_gravity="top"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/ic_add_a_photo_white_24dp"
+                            android:layout_margin="16dp" />
+                    </RelativeLayout>
+
+
+                </android.support.constraint.ConstraintLayout>
+
+
+                <Button
+                    android:id="@+id/donasi_buat"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="30dp"
-                    android:text="@string/Donasi_quote"
-                    android:gravity="center"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:text="@string/buat"
                     android:textColor="@color/white"
-                    app:fontFamily="@font/poppinslight"
-                    android:shadowColor="@color/black"
-                    android:shadowRadius="1.5"
-                    android:shadowDx="1"
-                    android:shadowDy="1"
-                    android:layout_alignBottom="@id/quote_img"
-                    android:layout_alignTop="@id/quote_img"/>
-            </RelativeLayout>
+                    android:textSize="15sp"
+                    android:layout_marginBottom="30dp"
+                    android:fontFamily="@font/poppinsregular"
+                    android:background="@drawable/shape_rect_corner"/>
+            </LinearLayout>
 
+        </android.support.v4.widget.NestedScrollView>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/donasi_judul"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/dim_gray"
-                    android:inputType="text"
-                    android:hint="Judul"
-                    android:maxLength="36"
-                    android:layout_margin="8dp"
-                    android:maxLines="1"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:fontFamily="@font/poppinsmedium"/>
-
-            </android.support.design.widget.TextInputLayout>
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/donasi_jumlah"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/dim_gray"
-                    android:inputType="numberDecimal"
-                    android:hint="Jumlah"
-                    android:layout_margin="8dp"
-                    android:maxLength="7"
-                    android:maxLines="1"
-                    android:imeOptions="actionNext"
-                    android:singleLine="true"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:fontFamily="@font/poppinsmedium"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/donasi_alamat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColorHint="@color/dim_gray"
-                    android:inputType="textMultiLine"
-                    android:hint="Lokasi"
-                    android:layout_margin="8dp"
-                    android:maxLines="3"
-                    android:imeOptions="actionDone"
-                    android:singleLine="true"
-                    android:backgroundTint="@color/colorPrimary"
-                    android:fontFamily="@font/poppinsmedium"/>
-
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/donasi_upload_img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"/>
-
-            <Button
-                android:id="@+id/donasi_buat"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:text="@string/buat"
-                android:textColor="@color/white"
-                android:textSize="15sp"
-                android:layout_marginBottom="30dp"
-                android:fontFamily="@font/poppinsregular"
-                android:background="@drawable/shape_rect_corner"/>
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
-
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

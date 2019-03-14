@@ -3,6 +3,8 @@ package com.example.kienz.domaku.explore;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,12 @@ import android.view.ViewGroup;
 import com.example.kienz.domaku.R;
 import com.example.kienz.domaku.donasi;
 import com.example.kienz.domaku.kategori;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -44,6 +52,9 @@ public class explore_frag extends Fragment {
     ArrayList<donasi> listTerbaru;
     @BindView(R.id.recyclerView_explore_list)
     RecyclerView recy;
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDonasiDatabaseReference;
 
     private OnFragmentInteractionListener mListener;
 
@@ -76,6 +87,8 @@ public class explore_frag extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDonasiDatabaseReference = mFirebaseDatabase.getReference().child("Donasi");
 
 
     }
@@ -90,33 +103,54 @@ public class explore_frag extends Fragment {
         mKategori = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recy.setLayoutManager(layoutManager);
+        adapter = new explore_kategori_adapter(getActivity(),mKategori);
+
+        recy.setAdapter(adapter);
         listTerdekat = new ArrayList<>();
         listTerbaru = new ArrayList<>();
-        donasi a = new donasi("Sisa wedding ada 40 porsi",40,"http://cdn2.tstatic.net/jabar/foto/bank/images/rijsttafel_20180919_094737.jpg",null,null);
-        donasi b = new donasi("Abis Syukuran masih ada rendang, sate,  buat 20",20,"https://sejasa-production.s3.amazonaws.com/uploads/attachment/file/554953/Screenshot_2016-06-05-16-04-47_com.facebook.katana.png",null,null);
-        listTerdekat.add(a);
-        listTerdekat.add(b);
-        listTerdekat.add(a);
-        listTerdekat.add(b);
-        listTerdekat.add(a);
-        listTerdekat.add(b);
-        listTerbaru.add(b);
-        listTerbaru.add(a);
-        listTerbaru.add(b);
-        listTerbaru.add(a);
-        listTerbaru.add(b);
-        listTerbaru.add(a);
         kategori eventTerdekat = new kategori("Terdekat",listTerdekat);
         kategori eventTerbaru = new kategori("Terbaru",listTerbaru);
+
+        mDonasiDatabaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                donasi don = dataSnapshot.getValue(donasi.class);
+                don.setId(dataSnapshot.getKey());
+                Log.d("namonnno",don.getJudul());
+                listTerbaru.add(0,don);
+                if(listTerbaru.size() > 6)
+                    listTerbaru.remove(listTerbaru.size() - 1);
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         mKategori.add(eventTerdekat);
         mKategori.add(eventTerbaru);
-
-        adapter = new explore_kategori_adapter(getActivity(),mKategori);
         for (kategori h : mKategori) {
             Log.d("namonn",h.getTitle());
             Log.d("namonno", String.valueOf(adapter.getItemCount()));
         }
-        recy.setAdapter(adapter);
+
         adapter.notifyDataSetChanged();
         return v;
     }

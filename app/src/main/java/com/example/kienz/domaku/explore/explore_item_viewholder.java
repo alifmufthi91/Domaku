@@ -37,8 +37,7 @@ public class explore_item_viewholder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 int itemPosition = getLayoutPosition();
                 Intent intent = new Intent(mContext, explore_detail.class);
-//                intent.putExtra("idResep",mRecipes.get(itemPosition).getRecipeId());
-//                intent.putExtra("namaResep", mRecipes.get(itemPosition).getName());
+                intent.putExtra("idDonasi",mDonasi.get(itemPosition).getId());
                 mContext.startActivity(intent);
             }
         });

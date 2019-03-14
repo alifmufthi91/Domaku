@@ -3,85 +3,62 @@
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="4">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <ImageView
-            style="@style/ThemeOverlay.FirebaseIcon"
-            android:id="@+id/googleIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/titleText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="Google"
-            android:theme="@style/ThemeOverlay.MyTitleText" />
-
-        <TextView
-            android:id="@+id/status"
-            style="@style/ThemeOverlay.MyTextDetail"
-            android:text="@string/signed_out" />
-
-        <TextView
-            android:id="@+id/detail"
-            style="@style/ThemeOverlay.MyTextDetail"
-            tools:text="Firebase User ID: 123456789abc" />
-
-    </LinearLayout>
-
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
 
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/signInButton"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                style="@style/ThemeOverlay.FirebaseIcon"
+                android:id="@+id/googleIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher_background"/>
+
+            <TextView
+                android:id="@+id/titleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:textSize="40sp"
+                android:text="@string/app_name"
+                android:fontFamily="@font/poppinsregular"
+                android:textColor="@color/white"
+                android:theme="@style/ThemeOverlay.MyTitleText" />
+
+            <TextView
+                android:id="@+id/status"
+                style="@style/ThemeOverlay.MyTextDetail"
+                android:text="Karena Berbagi Itu Indah"
+                android:fontFamily="@font/poppinsregular"
+                android:textColor="@color/white"/>
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/signInButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:visibility="visible" />
+
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progressLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="visible"
-            tools:visibility="gone" />
+            android:indeterminateOnly="true"
+            android:indeterminate="true"
+            android:visibility="gone"/>
 
-        <LinearLayout
-            android:id="@+id/signOutAndDisconnect"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:visibility="gone"
-            tools:visibility="visible">
 
-            <Button
-                android:id="@+id/signOutButton"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/sign_out"
-                android:theme="@style/ThemeOverlay.MyDarkButton" />
-
-            <Button
-                android:id="@+id/disconnectButton"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/disconnect"
-                android:theme="@style/ThemeOverlay.MyDarkButton" />
-        </LinearLayout>
 
     </RelativeLayout>
 

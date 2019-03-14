@@ -22,12 +22,13 @@
                 <ImageView
                     android:id="@+id/explore_detail_photo"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="300dp"
                     android:src="@drawable/blurredphoto"
                     android:scaleType="centerCrop"/>
 
             </RelativeLayout>
             <TextView
+                android:id="@+id/explore_detail_judul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"

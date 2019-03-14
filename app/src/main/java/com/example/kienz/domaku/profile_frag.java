@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -132,6 +133,7 @@ public class profile_frag extends Fragment {
                     public void onComplete(@NonNull Task<Void> task) {
                         Intent intent = new Intent(getContext(), GoogleSignInActivity.class);
                         getActivity().startActivity(intent);
+                        Toast.makeText(getContext(),"Anda Telah Logout",Toast.LENGTH_SHORT);
                         getActivity().finish();
                     }
                 });

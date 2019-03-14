@@ -1,4 +1,4 @@
-package com.example.kienz.domaku;
+package com.example.kienz.domaku.ambil;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kienz.domaku.R;
+import com.example.kienz.domaku.donasi;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

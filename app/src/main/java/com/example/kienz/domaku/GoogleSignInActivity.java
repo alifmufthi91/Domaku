@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -23,6 +24,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class GoogleSignInActivity extends AppCompatActivity implements
         View.OnClickListener {
 
@@ -34,22 +38,18 @@ public class GoogleSignInActivity extends AppCompatActivity implements
     // [END declare_auth]
 
     private GoogleSignInClient mGoogleSignInClient;
-    private TextView mStatusTextView;
-    private TextView mDetailTextView;
+    @BindView(R.id.progressLogin)
+    ProgressBar progLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_google);
+        ButterKnife.bind(this);
 
-        // Views
-        mStatusTextView = findViewById(R.id.status);
-        mDetailTextView = findViewById(R.id.detail);
 
         // Button listeners
         findViewById(R.id.signInButton).setOnClickListener(this);
-        findViewById(R.id.signOutButton).setOnClickListener(this);
-        findViewById(R.id.disconnectButton).setOnClickListener(this);
 
         // [START config_signin]
         // Configure Google Sign In
@@ -103,7 +103,8 @@ public class GoogleSignInActivity extends AppCompatActivity implements
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         // [START_EXCLUDE silent]
-        showProgressDialog();
+//        showProgressDialog();
+        showProgressBar();
         // [END_EXCLUDE]
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -120,11 +121,11 @@ public class GoogleSignInActivity extends AppCompatActivity implements
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
                         }
 
                         // [START_EXCLUDE]
-                        hideProgressDialog();
+//                        hideProgressDialog();
+                        hideProgressBar();
                         // [END_EXCLUDE]
                     }
                 });
@@ -138,46 +139,28 @@ public class GoogleSignInActivity extends AppCompatActivity implements
     }
     // [END signin]
 
-    private void signOut() {
-        // Firebase sign out
-        mAuth.signOut();
 
-        // Google sign out
-        mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        updateUI(null);
-                    }
-                });
-    }
-
-    private void revokeAccess() {
-        // Firebase sign out
-        mAuth.signOut();
-
-        // Google revoke access
-        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        updateUI(null);
-                    }
-                });
-    }
+//    private void revokeAccess() {
+//        // Firebase sign out
+//        mAuth.signOut();
+//
+//        // Google revoke access
+//        mGoogleSignInClient.revokeAccess().addOnCompleteListener(this,
+//                new OnCompleteListener<Void>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<Void> task) {
+//                        updateUI(null);
+//                    }
+//                });
+//    }
 
     private void updateUI(FirebaseUser user) {
-        hideProgressDialog();
+//        hideProgressDialog();
+        hideProgressBar();
         if (user != null) {
             Intent intent = new Intent(this, MainActivity.class);
             this.startActivity(intent);
             this.finish();
-        } else {
-            mStatusTextView.setText(R.string.signed_out);
-            mDetailTextView.setText(null);
-
-            findViewById(R.id.signInButton).setVisibility(View.VISIBLE);
-            findViewById(R.id.signOutAndDisconnect).setVisibility(View.GONE);
         }
     }
 
@@ -185,25 +168,34 @@ public class GoogleSignInActivity extends AppCompatActivity implements
     public void onClick(View v) {
         int i = v.getId();
         if (i == R.id.signInButton) {
+            showProgressBar();
             signIn();
-        } else if (i == R.id.signOutButton) {
-            signOut();
-        } else if (i == R.id.disconnectButton) {
-            revokeAccess();
         }
     }
 
-    public void showProgressDialog() {
+//    public void showProgressDialog() {
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+//                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//    }
+
+    public void showProgressBar() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        progLogin.setVisibility(View.VISIBLE);
     }
 
-    public void hideProgressDialog() {
+//    public void hideProgressDialog() {
+//        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+//    }
+
+    public void hideProgressBar() {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+        progLogin.setVisibility(View.GONE);
     }
     @Override
     public void onStop() {
         super.onStop();
-        hideProgressDialog();
+//        hideProgressDialog();
+        hideProgressBar();
     }
 }
