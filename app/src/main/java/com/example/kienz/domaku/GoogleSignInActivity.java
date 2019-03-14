@@ -41,6 +41,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
     @BindView(R.id.progressLogin)
     ProgressBar progLogin;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +101,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
     // [END onactivityresult]
 
     // [START auth_with_google]
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
         // [START_EXCLUDE silent]
 //        showProgressDialog();
@@ -121,6 +122,7 @@ public class GoogleSignInActivity extends AppCompatActivity implements
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            mGoogleSignInClient.revokeAccess();
                         }
 
                         // [START_EXCLUDE]
