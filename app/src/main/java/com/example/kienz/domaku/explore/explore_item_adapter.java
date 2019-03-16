@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.kienz.domaku.R;
-import com.example.kienz.domaku.donasi;
+import com.example.kienz.domaku.model.donasi;
 
 import java.util.ArrayList;
 

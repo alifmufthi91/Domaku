@@ -1,11 +1,13 @@
-package com.example.kienz.domaku;
+package com.example.kienz.domaku.config;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.kienz.domaku.ambil.ambil_frag;
+import com.example.kienz.domaku.donasi.donasi_frag;
 import com.example.kienz.domaku.explore.explore_frag;
+import com.example.kienz.domaku.profile.profile_frag;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     public PagerAdapter(FragmentManager fm){

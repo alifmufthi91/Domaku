@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.kienz.domaku.R;
-import com.example.kienz.domaku.kategori;
+import com.example.kienz.domaku.model.kategori;
 
 import java.util.ArrayList;
 

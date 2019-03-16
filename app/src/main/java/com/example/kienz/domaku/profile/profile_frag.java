@@ -1,4 +1,4 @@
-package com.example.kienz.domaku;
+package com.example.kienz.domaku.profile;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.kienz.domaku.GoogleSignInActivity;
+import com.example.kienz.domaku.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;

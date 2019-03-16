@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".explore_detail">
+    tools:context=".explore_detailActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -44,6 +44,7 @@
                 android:textColor="@color/black"
                 android:layout_marginHorizontal="16dp"/>
             <TextView
+                android:id="@+id/explore_detail_sisa"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/explore_detail_sisacount"
@@ -65,6 +66,7 @@
                     android:layout_height="20dp"
                     android:src="@drawable/ic_people_cccccc_24dp"/>
                 <TextView
+                    android:id="@+id/explore_detail_jumlah"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:textSize="16dp"
@@ -97,6 +99,7 @@
                     android:layout_height="20dp"
                     android:src="@drawable/ic_location_on_cccccc_24dp"/>
                 <TextView
+                    android:id="@+id/explore_detail_alamat"
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:textSize="16dp"
@@ -115,18 +118,18 @@
     </android.support.v4.widget.NestedScrollView>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:layout_alignParentBottom="true">
         <Button
+            android:id="@+id/explore_detail_ambil"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginHorizontal="120dp"
-            android:text="Ambil"
+            android:text="@string/ambil"
             android:textColor="@color/white"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:background="@drawable/shape_rect"/>
     </RelativeLayout>
     <ImageButton
         android:id="@+id/explore_detail_back"

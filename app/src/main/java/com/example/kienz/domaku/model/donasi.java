@@ -1,31 +1,27 @@
-package com.example.kienz.domaku;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+package com.example.kienz.domaku.model;
 
 public class donasi {
-    String judul;
-    String id;
-    int qty;
-    int sisa;
-    String gambar;
-    String donatur;
-    String waktuBuat;
-    String alamat;
-    koordinat koordinattempat;
+    public String judul;
+    public String id;
+    public int qty;
+    public int sisa;
+    public String status;
+    public String deskripsi;
+    public String gambar;
+    public String donatur;
+    public String waktuBuat;
+    public String alamat;
+    public koordinat koordinattempat;
 
 
 
     public donasi(String eventname, int jumlah, String gambarUrl, String alamat, String donatur) {
 
-        this.waktuBuat= "test";
         this.judul = eventname;
         this.qty = jumlah;
         this.gambar = gambarUrl;
-        this.alamat = "test";
-        this.donatur = "test";
-        this.koordinattempat = new koordinat(-6.6232204,107.17919);
+        this.alamat = alamat;
+        this.donatur = donatur;
     }
 
     public donasi() {}
@@ -95,11 +91,30 @@ public class donasi {
         this.id = id;
     }
 
+
     public int getSisa() {
         return sisa;
+
     }
 
     public void setSisa(int sisa) {
         this.sisa = sisa;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDeskripsi() {
+        return deskripsi;
+    }
+
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
+    }
+
 }

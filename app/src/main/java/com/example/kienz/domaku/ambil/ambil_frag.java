@@ -3,6 +3,8 @@ package com.example.kienz.domaku.ambil;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,8 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.kienz.domaku.MainActivity;
 import com.example.kienz.domaku.R;
-import com.example.kienz.domaku.donasi;
+import com.example.kienz.domaku.model.donasi;
+import com.example.kienz.domaku.model.mengambil;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -38,11 +48,13 @@ public class ambil_frag extends Fragment {
     private String mParam1;
     private String mParam2;
     public ambil_item_adapter adapter;
-    ArrayList<donasi> listAmbil;
+    ArrayList<mengambil> listAmbil;
     @BindView(R.id.recyclerView_ambil_items)
     RecyclerView recy;
     @BindView(R.id.ambil_kosong)
     LinearLayout KosongLayout;
+
+    DatabaseReference mAmbilDatabaseReference;
 
     private OnFragmentInteractionListener mListener;
 
@@ -75,6 +87,9 @@ public class ambil_frag extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        FirebaseDatabase mFirebaseDatabase = FirebaseDatabase.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        mAmbilDatabaseReference = mFirebaseDatabase.getReference().child("Mengambil/" + mAuth.getUid());
     }
 
     @Override
@@ -86,18 +101,44 @@ public class ambil_frag extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recy.setLayoutManager(layoutManager);
         listAmbil = new ArrayList<>();
-        donasi a = new donasi("Sisa wedding ada 40 porsi",40,"http://cdn2.tstatic.net/jabar/foto/bank/images/rijsttafel_20180919_094737.jpg",null,null);
-        donasi b = new donasi("Abis Syukuran masih ada rendang, sate,  buat 20",20,"https://sejasa-production.s3.amazonaws.com/uploads/attachment/file/554953/Screenshot_2016-06-05-16-04-47_com.facebook.katana.png",null,null);
-        listAmbil.add(a);
-        listAmbil.add(b);
         adapter = new ambil_item_adapter(getActivity(),listAmbil);
-
         recy.setAdapter(adapter);
+        mAmbilDatabaseReference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                mengambil itemAmbil = dataSnapshot.getValue(mengambil.class);
+                listAmbil.add(itemAmbil);
+                updateRecycler();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                mengambil itemAmbil = dataSnapshot.getValue(mengambil.class);
+                listAmbil.remove(itemAmbil);
+                updateRecycler();
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         updateRecycler();
         return v;
     }
 
-    void updateRecycler(){
+    private void updateRecycler(){
         if(adapter.getItemCount()!=0){
             KosongLayout.setVisibility(View.GONE);
         }else{

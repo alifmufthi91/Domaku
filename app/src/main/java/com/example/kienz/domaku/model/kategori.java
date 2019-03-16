@@ -1,10 +1,10 @@
-package com.example.kienz.domaku;
+package com.example.kienz.domaku.model;
 
 import java.util.ArrayList;
 
 public class kategori {
-    String title;
-    ArrayList<donasi> eventList;
+    public String title;
+    public ArrayList<donasi> eventList;
 
     public kategori(String title, ArrayList<donasi> eventList) {
         this.title = title;

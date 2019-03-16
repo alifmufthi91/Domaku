@@ -1,8 +1,8 @@
-package com.example.kienz.domaku;
+package com.example.kienz.domaku.model;
 
 public class koordinat {
-    double latitude;
-    double longitude;
+    public double latitude;
+    public double longitude;
 
     public koordinat() {
     }

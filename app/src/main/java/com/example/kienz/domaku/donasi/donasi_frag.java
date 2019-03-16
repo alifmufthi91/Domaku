@@ -1,10 +1,8 @@
-package com.example.kienz.domaku;
+package com.example.kienz.domaku.donasi;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
@@ -17,39 +15,35 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.example.kienz.domaku.MainActivity;
+import com.example.kienz.domaku.R;
+import com.example.kienz.domaku.donasi_doneActivity;
+import com.example.kienz.domaku.model.donasi;
+import com.example.kienz.domaku.model.koordinat;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -103,9 +97,7 @@ public class donasi_frag extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDonasiDatabaseReference;
-    private FirebaseStorage storage;
+    private MainActivity Activity;
     private FirebaseAuth mAuth;
 
 
@@ -140,10 +132,9 @@ public class donasi_frag extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDonasiDatabaseReference = mFirebaseDatabase.getReference().child("Donasi");
+        Activity = (MainActivity) getActivity();
         mAuth = FirebaseAuth.getInstance();
-        storage = FirebaseStorage.getInstance();
+        FirebaseStorage storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
     }
 
@@ -224,6 +215,7 @@ public class donasi_frag extends Fragment {
                                             e.printStackTrace();
                                         }
 //                                    donasi donasiBaru = new donasi(judulEditText.getText().toString(),Integer.parseInt(jumlahEditText.getText().toString()),urlImage,alamatEditText.getText().toString(),mAuth.getCurrentUser().getUid());
+                                        //TODO: Buat constructor baru ketika sudah selesai
                                         donasi donasiBaru = new donasi();
                                         donasiBaru.setJudul(judulEditText.getText().toString());
                                         donasiBaru.setAlamat(alamatEditText.getText().toString());
@@ -231,13 +223,13 @@ public class donasi_frag extends Fragment {
                                         donasiBaru.setGambar(urlImage);
                                         donasiBaru.setDonatur(mAuth.getCurrentUser().getUid());
                                         donasiBaru.setKoordinattempat(new koordinat(-6.6232204,107.17919));
-                                        donasiBaru.sisa=donasiBaru.qty;
-                                        mDonasiDatabaseReference.push().setValue(donasiBaru).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        donasiBaru.setSisa(donasiBaru.getQty());
+                                        Activity.mDonasiDatabaseReference.push().setValue(donasiBaru).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 Toast.makeText(getContext(),"Donasi telah dibuat",Toast.LENGTH_SHORT).show();
                                                 hideProgressDialog();
-                                                Intent afterDonasi = new Intent(getActivity(),donasiBeres.class);
+                                                Intent afterDonasi = new Intent(getActivity(),donasi_doneActivity.class);
                                                 startActivity(afterDonasi);
                                                 clearField();
                                             }
@@ -315,6 +307,7 @@ public class donasi_frag extends Fragment {
             }
         }
     }
+
 
 
     /**

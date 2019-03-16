@@ -3,14 +3,13 @@ package com.example.kienz.domaku.explore;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kienz.domaku.R;
-import com.example.kienz.domaku.donasi;
-import com.example.kienz.domaku.explore_detail;
+import com.example.kienz.domaku.explore_detailActivity;
+import com.example.kienz.domaku.model.donasi;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -36,7 +35,7 @@ public class explore_item_viewholder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 int itemPosition = getLayoutPosition();
-                Intent intent = new Intent(mContext, explore_detail.class);
+                Intent intent = new Intent(mContext, explore_detailActivity.class);
                 intent.putExtra("idDonasi",mDonasi.get(itemPosition).getId());
                 mContext.startActivity(intent);
             }

@@ -2,17 +2,15 @@ package com.example.kienz.domaku.explore;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SnapHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.kienz.domaku.PaddingItemDecoration;
+import com.example.kienz.domaku.config.PaddingItemDecoration;
 import com.example.kienz.domaku.R;
-import com.example.kienz.domaku.kategori;
+import com.example.kienz.domaku.model.kategori;
 
 import java.util.ArrayList;
 
@@ -49,6 +47,7 @@ public class explore_kategori_adapter extends RecyclerView.Adapter<explore_kateg
         holder.mEventRecyclerView.setLayoutManager(new LinearLayoutManager(holder
                 .mEventRecyclerView.getContext(),
                 LinearLayoutManager.HORIZONTAL, false));
+        holder.mEventRecyclerView.setNestedScrollingEnabled(false);
 
 //        SnapHelper snapHelperStart = new LinearSnapHelper();
 //        snapHelperStart.attachToRecyclerView(holder.mEventRecyclerView);

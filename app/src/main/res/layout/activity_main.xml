@@ -9,7 +9,7 @@
     <!--Content Main-->
 
 
-    <com.example.kienz.domaku.NonSwipeableViewPager
+    <com.example.kienz.domaku.config.NonSwipeableViewPager
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,7 +17,7 @@
         android:id="@+id/pager">
 
 
-    </com.example.kienz.domaku.NonSwipeableViewPager>
+    </com.example.kienz.domaku.config.NonSwipeableViewPager>
     <android.support.design.widget.TabLayout
         android:id="@+id/tablayout"
         android:layout_width="match_parent"

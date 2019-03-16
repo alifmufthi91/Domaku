@@ -19,6 +19,10 @@
     <string name="pengambilan_subtitle">Anda belum mengambil apapun</string>
     <string name="ambil_item_title">The Quick Brown Fox Jumps Over The Lazy Dog</string>
     <string name="frag_ambil">PENGAMBILAN</string>
+    <string name="donasi_judul_hint">Judul</string>
+    <string name="donasi_jumlah_hint">Jumlah</string>
+    <string name="donasi_lokasi_hint">Lokasi</string>
+    <string name="tambahkan_foto">Tambahkan Foto</string>
     <!-- Strings related to login -->
 
 </resources>

@@ -1,7 +1,7 @@
 *.iml
 .gradle
 /local.properties
-/.idea/caches/build_file_checksums.com.example.kienz.domaku.User
+/.idea/caches/build_file_checksums.com.example.kienz.domaku.model.user
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml

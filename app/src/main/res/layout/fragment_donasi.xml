@@ -6,7 +6,7 @@
     android:id="@+id/frag_donasi"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".donasi_frag">
+    tools:context=".donasi.donasi_frag">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:textColorHint="@color/dim_gray"
                         android:inputType="text"
-                        android:hint="Judul"
+                        android:hint="@string/donasi_judul_hint"
                         android:maxLength="36"
                         android:layout_margin="8dp"
                         android:maxLines="1"
@@ -82,7 +82,7 @@
                         android:layout_height="wrap_content"
                         android:textColorHint="@color/dim_gray"
                         android:inputType="numberDecimal"
-                        android:hint="Jumlah"
+                        android:hint="@string/donasi_jumlah_hint"
                         android:layout_margin="8dp"
                         android:maxLength="7"
                         android:maxLines="1"
@@ -103,7 +103,7 @@
                         android:layout_height="wrap_content"
                         android:textColorHint="@color/dim_gray"
                         android:inputType="textMultiLine"
-                        android:hint="Lokasi"
+                        android:hint="@string/donasi_lokasi_hint"
                         android:layout_margin="8dp"
                         android:maxLines="3"
                         android:maxLength="200"
@@ -116,12 +116,13 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tambahkan Foto"
+                    android:text="@string/tambahkan_foto"
+                    android:fontFamily="@font/poppinsmedium"
                     android:gravity="center"/>
                 <android.support.constraint.ConstraintLayout
                     android:id="@+id/donasi_bingkai"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="300dp"
                     android:layout_marginHorizontal="32dp"
                     android:layout_marginVertical="8dp">
                     <RelativeLayout
@@ -129,7 +130,8 @@
                         android:layout_height="match_parent">
                         <ImageView
                             android:id="@+id/donasi_upload_img"
-                            android:layout_width="match_parent"
+                            android:layout_width="350dp"
+                            android:layout_centerInParent="true"
                             android:layout_height="match_parent"
                             android:src="@drawable/defaultthumbs"
                             android:background="@color/colorPrimary"

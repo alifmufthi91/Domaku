@@ -1,4 +1,4 @@
-package com.example.kienz.domaku;
+package com.example.kienz.domaku.config;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

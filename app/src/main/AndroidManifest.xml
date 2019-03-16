@@ -41,8 +41,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".explore_detail" />
-        <activity android:name=".donasiBeres"></activity>
+        <activity android:name=".explore_detailActivity" />
+        <activity android:name=".donasi_doneActivity"></activity>
     </application>
 
 </manifest>

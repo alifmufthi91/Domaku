@@ -12,15 +12,18 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.kienz.domaku.ambil.ambil_frag;
+import com.example.kienz.domaku.donasi.donasi_frag;
 import com.example.kienz.domaku.explore.explore_frag;
+import com.example.kienz.domaku.config.PagerAdapter;
+import com.example.kienz.domaku.profile.profile_frag;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, explore_frag.OnFragmentInteractionListener, ambil_frag.OnFragmentInteractionListener, donasi_frag.OnFragmentInteractionListener, profile_frag.OnFragmentInteractionListener  {
 
     TabLayout tabLayout;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDonasiDatabaseReference;
+    public FirebaseDatabase mFirebaseDatabase;
+    public DatabaseReference mDonasiDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

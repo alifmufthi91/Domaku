@@ -6,8 +6,6 @@
         <shape>
             <solid
                 android:color="@color/colorPrimaryDarker"/>
-            <corners
-                android:radius="5dp" />
         </shape>
     </item>
 
@@ -16,8 +14,6 @@
         <shape>
             <solid
                 android:color="@color/colorPrimaryDark"/>
-            <corners
-                android:radius="5dp" />
         </shape>
     </item>
 
@@ -25,8 +21,6 @@
         <shape>
             <solid
                 android:color="@color/colorPrimary"/>
-            <corners
-                android:radius="5dp" />
         </shape>
     </item>
 </selector>

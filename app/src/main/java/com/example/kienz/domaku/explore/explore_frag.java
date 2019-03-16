@@ -13,15 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.kienz.domaku.MainActivity;
 import com.example.kienz.domaku.R;
-import com.example.kienz.domaku.donasi;
-import com.example.kienz.domaku.kategori;
+import com.example.kienz.domaku.model.donasi;
+import com.example.kienz.domaku.model.kategori;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -52,9 +50,10 @@ public class explore_frag extends Fragment {
     ArrayList<donasi> listTerbaru;
     @BindView(R.id.recyclerView_explore_list)
     RecyclerView recy;
-
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDonasiDatabaseReference;
+    private MainActivity Activity;
+//
+//    private FirebaseDatabase mFirebaseDatabase;
+//    private DatabaseReference mDonasiDatabaseReference;
 
     private OnFragmentInteractionListener mListener;
 
@@ -87,8 +86,10 @@ public class explore_frag extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDonasiDatabaseReference = mFirebaseDatabase.getReference().child("Donasi");
+//        mFirebaseDatabase = FirebaseDatabase.getInstance();
+//        mDonasiDatabaseReference = mFirebaseDatabase.getReference().child("Donasi");
+        Activity = (MainActivity) getActivity();
+
 
 
     }
@@ -99,10 +100,12 @@ public class explore_frag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_explore, container, false);
+
         ButterKnife.bind(this,v);
         mKategori = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recy.setLayoutManager(layoutManager);
+        recy.setNestedScrollingEnabled(false);
         adapter = new explore_kategori_adapter(getActivity(),mKategori);
 
         recy.setAdapter(adapter);
@@ -111,7 +114,7 @@ public class explore_frag extends Fragment {
         kategori eventTerdekat = new kategori("Terdekat",listTerdekat);
         kategori eventTerbaru = new kategori("Terbaru",listTerbaru);
 
-        mDonasiDatabaseReference.addChildEventListener(new ChildEventListener() {
+        Activity.mDonasiDatabaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 donasi don = dataSnapshot.getValue(donasi.class);

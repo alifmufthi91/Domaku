@@ -9,7 +9,7 @@
         android:layout_height="150dp"
         app:cardCornerRadius="6dp"
         android:layout_margin="8dp"
-        app:cardElevation="8dp">
+        app:cardElevation="4dp">
 
 
         <RelativeLayout
@@ -32,7 +32,7 @@
                 android:text="@string/item_name"
                 android:textColor="@color/white"
                 android:shadowColor="@color/black"
-                android:shadowRadius="1.5"
+                android:shadowRadius="2.5"
                 android:shadowDx="1"
                 android:shadowDy="1"
                 app:fontFamily="@font/robotobold"
